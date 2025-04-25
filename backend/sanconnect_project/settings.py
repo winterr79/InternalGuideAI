@@ -10,19 +10,32 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
-load_dotenv()
+#load_dotenv()
+# If needed, use explicit path (adjust if BASE_DIR definition changes)
+BASE_DIR = Path(__file__).resolve().parent.parent
+dotenv_path = BASE_DIR / '.env' # If BASE_DIR is Path object
+load_dotenv(dotenv_path=dotenv_path)
 
 # Build paths inside the project
-BASE_DIR = Path(__file__).resolve().parent.parent
+
 PROJECT_ROOT = BASE_DIR.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-t8z=op2l!*2$yu@4k43=7+gj!3iih0%8*c(w1^1$w#7u=7q6z&'
+# Read from environment variable, use your current key ONLY as a fallback for local dev
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-t8z=op2l!*2$yu@4k43=7+gj!3iih0%8*c(w1^1$w#7u=7q6z&')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Set DEBUG based on an environment variable, default to False for safety
+DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = []
+# Read comma-separated hosts from environment variable, default to empty string
+ALLOWED_HOSTS_STRING = os.getenv('DJANGO_ALLOWED_HOSTS', '')
+# Split the string into a list if it's not empty
+ALLOWED_HOSTS = ALLOWED_HOSTS_STRING.split(',') if ALLOWED_HOSTS_STRING else []
+
+# IMPORTANT: Add development hosts only when DEBUG is True
+if DEBUG:
+    ALLOWED_HOSTS.extend(['127.0.0.1:8000', 'localhost'])
 
 # Application definition
 INSTALLED_APPS = [
