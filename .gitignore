@@ -1,0 +1,15 @@
+# Python cache and virtual environment
+__pycache__/
+*.pyc
+backend/venv/
+
+# IDE / Editor specific files
+.idea/
+.vscode/
+*.swp
+
+# Environment variables file (IMPORTANT for API Key later)
+.env
+
+# SQLite database (optional - commit migrations, not usually the db itself)
+# db.sqlite3

@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensory Souk Product Assistant</title>
+    <link rel="stylesheet" href="{% static 'chatbot_app/css/style.css' %}">
+</head>
+<body>
+    <div class="chat-container">
+        <header class="chat-header">
+            <h1>Sensory Souk Product Assistant</h1>
+            <p>Ask me about our products!</p>
+        </header>
+        
+        <div id="chatbox" class="chatbox">
+            <!-- Chat messages will be displayed here -->
+            <div class="bot-message">
+                <p>Hi! I'm the Sensory Souk Product Assistant. I can help you with information about our products. What would you like to know?</p>
+            </div>
+        </div>
+        
+        <form id="chat-form" class="chat-form">
+            {% csrf_token %}
+            <div class="input-container">
+                <input type="text" id="user-input" placeholder="Type your question here..." autocomplete="off">
+                <button type="submit" id="send-button">Send</button>
+            </div>
+        </form>
+        
+        <div class="chat-footer">
+            <p>Internal Guide AI MVP - Sensory Souk</p>
+        </div>
+    </div>
+
+    <!-- JavaScript for chat functionality -->
+    <script src="{% static 'chatbot_app/js/script.js' %}"></script>
+</body>
+</html>

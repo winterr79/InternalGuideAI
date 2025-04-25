@@ -1,0 +1,279 @@
+{
+    "Wooden Busy Board": {
+      "price": "100.00 QAR",
+      "description": "Discover all that's inside the barn with this educational, play-based learning activity board. Undo latches and laces to open doors and hatches, enhancing problem-solving skills, fine motor control, and patience.",
+      "age_range": "3 years+",
+      "warning": "Choking hazard: adult supervision required.",
+      "use_cases": [
+        "Enhances fine motor skills",
+        "Builds problem-solving ability",
+        "Teaches patience through interactive play"
+      ],
+      "specs": [
+        "Board size: 30 cm × 23 cm × 1 cm",
+        "Timber construction",
+        "Child-safe non-toxic paint"
+      ],
+      "pros": [
+        "Durable wooden craftsmanship",
+        "Safe, non-toxic finish"
+      ],
+      "cons": [
+        "Contains small parts requiring supervision"
+      ],
+      "vendor": "Sensory Souk"
+    },
+    "Wooden Musical Instrument Set": {
+      "price": "160.00 QAR",
+      "description": "Encourage your child's musical creativity with a hand-painted wooden tray of instruments—xylophone, maracas, drum, flute, and baton—designed for small hands.",
+      "age_range": "3+ years",
+      "warning": "Choking hazard: small detachable parts; adult supervision required.",
+      "use_cases": [
+        "Introduces basic musical concepts",
+        "Stimulates imagination and creativity",
+        "Develops auditory discrimination"
+      ],
+      "specs": [
+        "Includes xylophone, 2 maracas, drum, flute, baton",
+        "Package dimensions: 37 × 29 × 6 cm",
+        "High-quality wood, non-toxic paint"
+      ],
+      "pros": [
+        "Smooth, safe edges",
+        "Vibrant hand-painted designs"
+      ],
+      "cons": [
+        "Multiple small pieces require supervision"
+      ],
+      "vendor": "Sensory Souk"
+    },
+    "Time Tracker Visual Timer and Clock": {
+      "price": "200.00 QAR",
+      "description": "A programmable timer with red, yellow, and green lights plus a large LCD—perfect for visual time management and transitions in classroom or home settings.",
+      "age_range": "Not specified (classroom/home use)",
+      "warning": "Requires adult setup and supervision for battery or adapter installation.",
+      "use_cases": [
+        "Teaches time management and transitions",
+        "Supports self-help decision making",
+        "Reinforces basic math/order skills"
+      ],
+      "specs": [
+        "Measures 8″ × 4″",
+        "Programmable lights: green, yellow, red",
+        "Large LCD display; AC adapter or 4 AAA batteries"
+      ],
+      "pros": [
+        "Customizable alerts",
+        "Clear visual and auditory cues"
+      ],
+      "cons": [
+        "Requires power source or batteries"
+      ],
+      "vendor": "Sensory Souk"
+    },
+    "Light-Up Parachute Toy Set": {
+      "price": "20.00 QAR",
+      "description": "Tangle-free, light-up parachute with figurine promotes imaginative outdoor play and simulates real landing situations.",
+      "age_range": "3+ years",
+      "warning": "Choking hazard: small parts, adult supervision required.",
+      "use_cases": [
+        "Encourages gross motor skills",
+        "Fosters creativity through simulation games",
+        "Great for outdoor activity"
+      ],
+      "specs": [
+        "1 set: light-up parachute with man figurine",
+        "Multi-color plastic construction"
+      ],
+      "pros": [
+        "Interactive LED feature",
+        "Simple, engaging play"
+      ],
+      "cons": [
+        "Small detachable parts"
+      ],
+      "vendor": "Sensory Souk"
+    },
+    "Parachute Toy with Hand Throwing Tool": {
+      "price": "15.00 QAR",
+      "description": "A tangle-free parachute and hand-held launcher that mimic real-world landings to boost coordination and creativity.",
+      "age_range": "3+ years",
+      "warning": "Choking hazard: small parts, adult supervision required.",
+      "use_cases": [
+        "Promotes hand-eye coordination",
+        "Ideal for outdoor play",
+        "Stimulates imaginative role-play"
+      ],
+      "specs": [
+        "1 set with throwing tool",
+        "Multi-color plastic material"
+      ],
+      "pros": [
+        "Easy to launch",
+        "Durable and tangle-free"
+      ],
+      "cons": [
+        "Small components"
+      ],
+      "vendor": "Sensory Souk"
+    },
+    "Playfoam Sand ABC Cookies Set": {
+      "price": "150.00 QAR",
+      "description": "Flatten, cut, and stamp moldable Playfoam Sand to learn letters—combining tactile play with alphabet practice.",
+      "age_range": "3+ years",
+      "warning": "Choking hazard: small parts, potential color transfer, adult supervision required.",
+      "use_cases": [
+        "Reinforces letter recognition",
+        "Develops fine motor and sensory skills",
+        "Encourages creative play"
+      ],
+      "specs": [
+        "Includes 2 colors of Playfoam Sand, rolling pin, spatula, cookie cutter, 26 letter stamps",
+        "May transfer color to surfaces"
+      ],
+      "pros": [
+        "Hands-on learning",
+        "Easy to mould and shape"
+      ],
+      "cons": [
+        "Color may stain surfaces"
+      ],
+      "vendor": "Sensory Souk"
+    },
+    "Bingo Bears Game": {
+      "price": "150.00 QAR",
+      "description": "A numbers-and-colors bingo game that builds preschool number, color, and comparison skills without requiring reading.",
+      "age_range": "3+ years",
+      "warning": "Choking hazard: adult supervision required.",
+      "use_cases": [
+        "Practices number recognition",
+        "Enhances color/size matching skills",
+        "Develops visual scanning and memory"
+      ],
+      "specs": [
+        "4 bingo cards, 32 double-sided tiles, 36 game markers, 1 spinner, Activity Guide",
+        "Supports 2–4 players"
+      ],
+      "pros": [
+        "No reading needed",
+        "Multiple gameplay modes"
+      ],
+      "cons": [
+        "Small game pieces"
+      ],
+      "vendor": "Sensory Souk"
+    },
+    "Groovy Shroom Nee Doh Stress Ball": {
+      "price": "45.00 QAR",
+      "description": "A mushroom-shaped dough compound stress ball. Hypoallergenic, non-toxic (no BPA, phthalates, latex). Color varies.",
+      "age_range": "3+ years",
+      "warning": "Choking hazard: adult supervision required.",
+      "use_cases": [
+        "Stress relief, focus aid, fine motor engagement; great for schools, offices, party favors."
+      ],
+      "specs": [
+        "Mushroom-shaped dough compound; hypoallergenic, non-toxic"
+      ],
+      "pros": [
+        "Reusable shape-memory compound; portable."
+      ],
+      "cons": [
+        "Small parts risk, needs supervision."
+      ],
+      "vendor": "Sensory Souk"
+    },
+    "Gumdrop Nee Doh Stress Ball": {
+      "price": "45.00 QAR",
+      "description": "Retro neon-color, doh-filled stress ball that springs back into shape every squeeze for soothing tactile fun.",
+      "age_range": "3+ years",
+      "warning": "Choking hazard: adult supervision required.",
+      "use_cases": [
+        "Portable stress relief",
+        "Sensory fidget for focus",
+        "Great for on-the-go calming"
+      ],
+      "specs": [
+        "1 Gumdrop Nee Doh",        
+        "Hypoallergenic, non-toxic formula"
+      ],
+      "pros": [
+        "Vibrant neon colors",
+        "Safe, hypoallergenic"
+      ],
+      "cons": [
+        "Small parts require supervision"
+      ],
+      "vendor": "Sensory Souk"
+    },
+    "Nice Cube Nee Doh Stress Ball": {
+      "price": "45.00 QAR",
+      "description": "A square, semi-transparent stress toy with slow-release squish and firm rebound, perfect for anytime tactile relief.",
+      "age_range": "3+ years",
+      "warning": "Choking hazard: adult supervision required.",
+      "use_cases": [
+        "Office or classroom fidget",
+        "Portable sensory relief",
+        "Supports stress management"
+      ],
+      "specs": [
+        "1 Nice Cube Nee Doh",
+        "Semi-transparent, hypoallergenic formula"
+      ],
+      "pros": [
+        "Unique cube shape",
+        "Soft-firm dynamic squish"
+      ],
+      "cons": [
+        "Small parts caution"
+      ],
+      "vendor": "Sensory Souk"
+    },
+    "Big Feelings Nesting Fruit Friends": {
+      "price": "140.00 QAR",
+      "description": "A set of friendly nesting fruits with double-sided faces introducing 10 emotions, fostering social-emotional learning and sensory play.",
+      "age_range": "3+ years",
+      "warning": "Choking hazard: adult supervision required.",
+      "use_cases": [
+        "Teaches emotion recognition and opposites",
+        "Strengthens fine motor skills",
+        "Encourages SEL conversations"
+      ],
+      "specs": [
+        "1 set: 4 × 2-piece nesting fruits + 1 single grape",
+        "Fun textured surfaces"
+      ],
+      "pros": [
+        "Double-sided emotion faces",
+        "Engaging textured play"
+      ],
+      "cons": [
+        "Small parts require supervision"
+      ],
+      "vendor": "Sensory Souk"
+    },
+    "2 in 1 Wooden Board Game-Snakes & Ladders + Ludo": {
+      "price": "50.00 QAR",
+      "description": "Dual-game wooden set featuring both Ludo and Snakes & Ladders, promoting counting, strategy, and family bonding.",
+      "age_range": "3+ years",
+      "warning": "Choking hazard: adult supervision required.",
+      "use_cases": [
+        "Develops counting and calculation skills",
+        "Offers strategic gameplay",
+        "Ideal for family game nights"
+      ],
+      "specs": [
+        "1 wooden board with reversible design",
+        "FSC-certified timber, non-toxic paint",
+        "Printed wooden dice included"
+      ],
+      "pros": [
+        "Two classic games in one",
+        "High-quality wooden finish"
+      ],
+      "cons": [
+        "Small dice and pieces"
+      ],
+      "vendor": "Sensory Souk"
+    }
+  }
+  
