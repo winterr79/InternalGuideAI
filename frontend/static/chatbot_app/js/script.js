@@ -1,8 +1,9 @@
 /**
- * Chat interface JavaScript functionality
+ * SanConnect Product Assistant - Chat Interface JavaScript
  * 
  * Handles user input submission, displays messages in the chat interface,
- * communicates with the backend API, and manages the UI state.
+ * communicates with the backend API, renders Markdown responses,
+ * and manages the UI state.
  */
 
 // Wait for DOM to be fully loaded before attaching event listeners
@@ -12,6 +13,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const userInput = document.getElementById('user-input');
     const chatbox = document.getElementById('chatbox');
     const sendButton = document.getElementById('send-button');
+    
+    // Configure Marked.js for Markdown rendering
+    // Disable strict sanitization to allow more formatting, but still safe for internal tool
+    marked.setOptions({
+        breaks: true,        // Convert \n to <br>
+        gfm: true,           // GitHub Flavored Markdown
+        headerIds: false,    // No header IDs for simplicity
+        sanitize: false      // Allow HTML in markdown for formatting
+    });
     
     // Get CSRF token from the cookie for secure POST requests
     function getCSRFToken() {
@@ -31,9 +41,20 @@ document.addEventListener('DOMContentLoaded', function() {
         const messageDiv = document.createElement('div');
         messageDiv.className = isUser ? 'user-message' : 'bot-message';
         
-        // Add message content
-        const messageContent = document.createElement('p');
-        messageContent.textContent = message;
+        // Create message content container
+        const messageContent = document.createElement('div');
+        messageContent.className = 'message-content';
+        
+        // For user messages, keep as plain text
+        if (isUser) {
+            messageContent.textContent = message;
+        } 
+        // For bot messages, render markdown
+        else {
+            messageContent.innerHTML = marked.parse(message);
+        }
+        
+        // Add message content to message div
         messageDiv.appendChild(messageContent);
         
         // Add to chatbox and scroll to bottom
@@ -133,6 +154,20 @@ document.addEventListener('DOMContentLoaded', function() {
             sendButton.disabled = false;
             userInput.focus();
         });
+    });
+    
+    // Handle Enter key press to submit form
+    userInput.addEventListener('keydown', function(event) {
+        // Check if Enter was pressed without Shift key
+        if (event.key === 'Enter' && !event.shiftKey) {
+            // Prevent default behavior (newline)
+            event.preventDefault();
+            
+            // Trigger form submission
+            if (userInput.value.trim() !== '') {
+                chatForm.dispatchEvent(new Event('submit'));
+            }
+        }
     });
     
     // Focus input field when page loads

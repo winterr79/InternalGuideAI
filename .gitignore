@@ -1,15 +1,38 @@
-# Python cache and virtual environment
+
 __pycache__/
-*.pyc
+*.py[cod]
+*.egg-info/
 backend/venv/
 
-# IDE / Editor specific files
+
+backend/db.sqlite3
+backend/db.sqlite3-journal
+backend/staticfiles/
+backend/media/
+
+
+backend/data/
+
+
 .idea/
 .vscode/
 *.swp
+*.DS_Store
 
-# Environment variables file (IMPORTANT for API Key later)
-.env
 
-# SQLite database (optional - commit migrations, not usually the db itself)
-# db.sqlite3
+backend/.env 
+
+
+*.log
+logs/
+backend/*.log
+backend/logs/
+
+
+*.coverage
+*.tox
+.pytest_cache/
+htmlcov/
+
+
+backend/sensory_souk_seeds.txt

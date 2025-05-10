@@ -1,8 +1,8 @@
 /* 
- * Chat Interface Styling
+ * SanConnect Product Assistant Interface Styling
  *
- * Contains styles for the chat container, messages, input area, 
- * and responsive design adjustments.
+ * Full-screen, professionally styled chat interface using 
+ * Sensory Souk brand colors and optimized spacing.
  */
 
 /* Reset and base styles */
@@ -14,22 +14,17 @@
 }
 
 body {
-    background-color: #f5f7fa;
+    background-color: #F5F7FA; /* Very Light Gray/Off-white background */
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+    width: 100vw;
+    overflow: hidden;
 }
 
-/* Main chat container */
+/* Main chat container - full screen */
 .chat-container {
-    width: 100%;
-    max-width: 800px;
-    height: 90vh;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 100vw;
+    height: 100vh;
+    background-color: #F5F7FA;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -37,20 +32,22 @@ body {
 
 /* Chat header */
 .chat-header {
-    background-color: #4e3296;
+    background-color: #2257B6; /* Strong Blue */
     color: white;
     padding: 15px 20px;
     text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .chat-header h1 {
     font-size: 1.5rem;
     margin-bottom: 5px;
+    font-weight: 600;
 }
 
 .chat-header p {
     font-size: 0.9rem;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 /* Messages area */
@@ -61,31 +58,113 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
 }
 
 /* Message styling */
 .user-message, .bot-message {
-    max-width: 80%;
-    padding: 10px 15px;
-    border-radius: 18px;
+    max-width: 90%;
+    padding: 12px 16px;
+    border-radius: 12px;
     word-wrap: break-word;
+    line-height: 1.5;
 }
 
 .user-message {
     align-self: flex-end;
-    background-color: #4e3296;
-    color: white;
-    border-bottom-right-radius: 5px;
+    background-color: #2257B6; /* Strong Blue */
+    color: #FFFFFF; /* White text */
+    border-bottom-right-radius: 4px;
 }
 
 .bot-message {
     align-self: flex-start;
-    background-color: #f0f2f5;
+    background-color: #E6ECF3; /* Soft Blue-Gray */
+    color: #333333; /* Dark Gray text */
+    border-bottom-left-radius: 4px;
+}
+
+/* Message content styling */
+.message-content {
+    width: 100%;
+}
+
+/* Markdown styling within bot messages */
+.bot-message p {
+    margin-bottom: 10px;
+}
+
+.bot-message p:last-child {
+    margin-bottom: 0;
+}
+
+.bot-message ul, .bot-message ol {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.bot-message li {
+    margin-bottom: 5px;
+}
+
+.bot-message h1, .bot-message h2, .bot-message h3 {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    color: #333333;
+}
+
+.bot-message h1 {
+    font-size: 1.5em;
+}
+
+.bot-message h2 {
+    font-size: 1.3em;
+}
+
+.bot-message h3 {
+    font-size: 1.1em;
+}
+
+.bot-message strong {
+    font-weight: bold;
+}
+
+.bot-message em {
+    font-style: italic;
+}
+
+.bot-message code {
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: Consolas, Monaco, 'Andale Mono', monospace;
+    font-size: 0.9em;
+}
+
+.bot-message pre {
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin: 10px 0;
+    border: 1px solid #E0E0E0;
+}
+
+.bot-message pre code {
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-size: 0.9em;
     color: #333;
-    border-bottom-left-radius: 5px;
 }
 
 /* Typing indicator */
+.typing-indicator {
+    padding: 8px 16px;
+}
+
 .typing-indicator p {
     display: inline-block;
     animation: ellipsis 1.5s infinite;
@@ -99,47 +178,61 @@ body {
 
 /* Input area */
 .chat-form {
-    padding: 15px;
-    background-color: #f9f9f9;
-    border-top: 1px solid #eaeaea;
+    padding: 15px 20px;
+    background-color: white;
+    border-top: 1px solid #E0E0E0; /* Light border */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
 }
 
 .input-container {
     display: flex;
     gap: 10px;
+    align-items: center;
 }
 
 #user-input {
     flex: 1;
-    padding: 12px 15px;
-    border: 1px solid #ddd;
+    padding: 12px 16px;
+    border: 1px solid #DDDDDD; /* Light border */
     border-radius: 25px;
     outline: none;
     font-size: 16px;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 #user-input:focus {
-    border-color: #4e3296;
+    border-color: #2257B6; /* Strong Blue */
+    box-shadow: 0 0 0 2px rgba(34, 87, 182, 0.2);
 }
 
 #send-button {
-    background-color: #4e3296;
+    background-color: #2257B6; /* Strong Blue */
     color: white;
     border: none;
-    border-radius: 25px;
-    padding: 12px 20px;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
-    font-weight: bold;
     transition: background-color 0.3s;
 }
 
+#send-button svg {
+    width: 20px;
+    height: 20px;
+}
+
 #send-button:hover {
-    background-color: #3c2574;
+    background-color: #1b4999; /* Darker blue on hover */
 }
 
 #send-button:disabled {
-    background-color: #9c96ab;
+    background-color: #9cb2d8; /* Lighter blue when disabled */
     cursor: not-allowed;
 }
 
@@ -148,27 +241,47 @@ body {
     padding: 10px;
     text-align: center;
     font-size: 0.8rem;
-    color: #888;
-    background-color: #f9f9f9;
-    border-top: 1px solid #eaeaea;
+    color: #666666; /* Medium Gray */
+    background-color: #F5F7FA;
+    border-top: 1px solid #E0E0E0;
 }
 
 /* Responsive design adjustments */
-@media (max-width: 600px) {
-    body {
-        padding: 10px;
-    }
-    
-    .chat-container {
-        height: 95vh;
-        border-radius: 8px;
+@media (max-width: 768px) {
+    .chatbox {
+        padding: 15px;
     }
     
     .user-message, .bot-message {
-        max-width: 90%;
+        max-width: 95%;
     }
     
     .chat-header h1 {
         font-size: 1.2rem;
+    }
+    
+    .chat-form {
+        padding: 10px 15px;
+    }
+}
+
+/* For very small screens */
+@media (max-width: 480px) {
+    .user-message, .bot-message {
+        max-width: 100%;
+    }
+    
+    #user-input {
+        padding: 10px 12px;
+    }
+    
+    #send-button {
+        width: 38px;
+        height: 38px;
+    }
+    
+    #send-button svg {
+        width: 18px;
+        height: 18px;
     }
 }

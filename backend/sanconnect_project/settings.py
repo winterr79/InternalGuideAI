@@ -35,7 +35,7 @@ ALLOWED_HOSTS = ALLOWED_HOSTS_STRING.split(',') if ALLOWED_HOSTS_STRING else []
 
 # IMPORTANT: Add development hosts only when DEBUG is True
 if DEBUG:
-    ALLOWED_HOSTS.extend(['127.0.0.1:8000', 'localhost'])
+    ALLOWED_HOSTS.extend(['127.0.0.1', 'localhost'])
 
 # Application definition
 INSTALLED_APPS = [
@@ -114,6 +114,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     PROJECT_ROOT / 'frontend' / 'static'
 ]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

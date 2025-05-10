@@ -4,20 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sensory Souk Product Assistant</title>
+    <title>SanConnect Product Assistant</title>
     <link rel="stylesheet" href="{% static 'chatbot_app/css/style.css' %}">
+    <!-- Include marked.js for Markdown rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
 </head>
 <body>
     <div class="chat-container">
         <header class="chat-header">
-            <h1>Sensory Souk Product Assistant</h1>
-            <p>Ask me about our products!</p>
+            <h1>SanConnect Product Assistant</h1>
+            <p>Your internal knowledge companion</p>
         </header>
         
         <div id="chatbox" class="chatbox">
             <!-- Chat messages will be displayed here -->
             <div class="bot-message">
-                <p>Hi! I'm the Sensory Souk Product Assistant. I can help you with information about our products. What would you like to know?</p>
+                <div class="message-content">
+                    <p>Hi! I'm the SanConnect Product Assistant. I can help you with information about our products. What would you like to know?</p>
+                </div>
             </div>
         </div>
         
@@ -25,15 +29,19 @@
             {% csrf_token %}
             <div class="input-container">
                 <input type="text" id="user-input" placeholder="Type your question here..." autocomplete="off">
-                <button type="submit" id="send-button">Send</button>
+                <button type="submit" id="send-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
             </div>
         </form>
         
         <div class="chat-footer">
-            <p>Internal Guide AI MVP - Sensory Souk</p>
+            <p>Sensory Souk - Internal Product Assistant</p>
         </div>
     </div>
-
     <!-- JavaScript for chat functionality -->
     <script src="{% static 'chatbot_app/js/script.js' %}"></script>
 </body>
