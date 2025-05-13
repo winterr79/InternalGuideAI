@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 #load_dotenv()
 # If needed, use explicit path (adjust if BASE_DIR definition changes)
 BASE_DIR = Path(__file__).resolve().parent.parent
-dotenv_path = BASE_DIR / '.env' # If BASE_DIR is Path object
+dotenv_path = BASE_DIR / '.env' 
 load_dotenv(dotenv_path=dotenv_path)
 
 # Build paths inside the project
@@ -45,12 +45,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'chatbot_app',  # Our main application
+    'chatbot_app',  
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',  # Required for session management
+    'django.contrib.sessions.middleware.SessionMiddleware',  
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

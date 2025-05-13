@@ -24,4 +24,4 @@ class ChatLog(models.Model):
     
     class Meta:
         """Meta options for the ChatLog model"""
-        ordering = ['-timestamp']  # Most recent logs first
+        ordering = ['-timestamp'] 
