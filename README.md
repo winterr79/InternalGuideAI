@@ -1,96 +1,197 @@
-# InternalGuideAI - Sensory Souk Product Assistant MVP
+# SanConnect Product Assistant
 
-## 1. What's the Goal Here?
+## The Big Idea: An Internal Product Helper
 
-Getting quick, accurate information about specific products can sometimes be a challenge across Sanco Group's diverse verticals. This project is a first step – a Minimum Viable Product (MVP) – towards building a helpful internal AI assistant.
+Ever find yourself digging for product details across Sanco Group's different businesses? It can be a bit of a maze! This project, "SanConnect Product Assistant," is my initial crack at building a smart internal helper to make that easier. Think of this as the first version (an MVP) to see if we can get an AI to be our go-to for product info.
 
-The main goal of this MVP is to test the core concept and technical feasibility of using a conversational AI (powered by Google Gemini via its API) within a simple Django web application to provide specific information, starting with a few products from the Sensory Souk catalog.
+For this MVP, I'm focusing on:
+*   Seeing if a conversational AI (using Google's Gemini) can actually work as a quick internal guide.
+*   Making sure it can understand normal, everyday questions from employees.
+*   The really important bit: **grounding its answers strictly in our company's product data** (scraped from the Sensory Souk website). This means no made-up stuff – just the facts!
+*   Getting it to handle simple back-and-forth conversation, like follow-up questions.
 
-I aim to show:
-* How an AI can act as a knowledgeable internal guide.
-* That it can understand varied employee questions (natural language).
-* That I can make it provide answers based only on specific company data (product info), ensuring accuracy.
-* How it can handle basic conversational follow-ups.
+## What's In This Version (And What's On the Wishlist)
 
-## 2. What This MVP Does (and Doesn't Do)
+To get this off the ground quickly, I've kept the first version (MVP) pretty focused. Here's what it can do right now:
 
-To keep this initial version focused and achievable, I've defined a clear scope:
+*   **Your Sensory Souk Product Go-To:** It builds its knowledge from the Sensory Souk website, aiming to answer questions about products found there.
+*   **Understands Your Questions (RAG Powered):** Thanks to Google's Gemini and a Retrieval-Augmented Generation (RAG) pipeline, you can ask about products in different ways. The system tries to find relevant text from the website data to help form an answer.
+*   **Fact-Based Answers Only:** This is super important! The assistant *only* uses the product info scraped from the website. This keeps the answers accurate and stops the AI from guessing or making things up (no "hallucinations" here!).
+*   **Basic Chat Memory:** It can use recent conversation history (sent by the frontend) to understand follow-up questions.
+*   **Knows Its Limits:** If you ask about something outside its current knowledge base or if the retrieved information is insufficient, it should politely tell you.
+*   **Simple Web Interface:** You chat with it through a webpage.
+*   **Learning Log:** I'm logging conversations to a basic SQLite database. This is mainly for me to see what questions are being asked, how it's doing, and where to improve it.
 
-### Core Functionality:
+**What's Not In This MVP (Future Ideas!):**
 
-This MVP acts as a Sensory Souk Product Information Assistant. You can ask it questions about 3-5 specific products (like the Wooden Busy Board, Time Tracker, Nee Doh balls - the exact list is defined in the data).
+To keep things manageable for this first pass, I've left out some of the fancier stuff for now:
+*   A super-polished, pixel-perfect UI (it's functional!).
+*   User accounts or remembering things across different browser sessions without a persistent conversation ID from the client.
+*   Deep understanding of very complex, multi-step queries or user roles.
+*   Super-fancy error messages (it handles the basics).
+*   Direct hookups to tools like Teams or mind-mapping software (though that's a cool idea for later!).
+*   Helping with complex troubleshooting steps for products.
+*   Live links to inventory, order systems, or other big databases.
+*   Advanced comparison between more than two products simultaneously.
+*   Comprehensive category-level Q&A (current focus is on product-specific details).
 
-* It uses the Gemini API to figure out what product you're asking about, even if you phrase your question differently.
-* Critically, it generates answers only from the product information I provide it (in a simple JSON file). This prevents the AI from making things up (hallucinating) and keeps  the information accurate.
-* It remembers the last product discussed in the current chat session, so you can ask simple follow-up questions like "What age is it for?".
-* If you ask about something outside the known products, it will politely let you know it doesn't have that information yet.
-* Interaction happens through a basic web page.
-* Conversations are logged to a simple database (SQLite) for debugging and future analysis.
+## The Tech Behind It
 
-### Key Limitations (What's NOT Included Yet):
+Here's what's powering this assistant:
 
-To keep the focus tight for this initial version, several features are not included:
+*   **Python & Django:** The backbone of the web application.
+*   **SQLite:** A simple, file-based database that comes with Django, used for `ChatLog`.
+*   **Google Gemini API:** The brains for understanding questions and generating answers (specifically using models like `gemini-2.0-flash` for chat and `models/embedding-001` for embeddings).
+*   **Data Ingestion & RAG (Retrieval-Augmented Generation):**
+    *   `requests` and `BeautifulSoup4` for crawling and parsing product information from the Sensory Souk website.
+    *   `xml.etree.ElementTree` for parsing sitemaps.
+    *   `faiss-cpu` for creating and searching a vector index of the product information.
+    *   `scikit-learn` (specifically `TfidfVectorizer`) for text analysis in the re-ranking process.
+    *   Custom Python logic for text chunking, intent analysis, multi-query generation, and re-ranking retrieved chunks.
+*   **Frontend:** Basic HTML, CSS, and JavaScript.
+    *   `marked.js` for rendering Markdown in the bot's responses.
+*   **Dev Environment:** Standard Python virtual environment (`venv`) for keeping dependencies tidy, and Git/GitHub for version control.
 
-* A polished, complex user interface (UI).
-* Deep, long-term memory (it only remembers context within the current session).
-* Personalization based on user roles or complex context understanding.
-* Sophisticated error handling beyond basic API/server issues.
-* Integrations with other tools like Microsoft Teams or mind-mapping software.
-* Complex tasks like step-by-step troubleshooting (the focus is purely on product info retrieval).
-* Connections to live inventory, order systems, or other complex databases.
+## How It All Connects (The RAG Flow)
 
-## 3. The Tech Stack
+Here's a peek under the hood at how your questions get answered:
 
-I'm using a fairly standard setup for this kind of web application:
+1.  **Knowledge Base First (The `update_vectordb` command):**
+    *   A Django management command (`manage.py update_vectordb`) is run to build/update the knowledge base.
+    *   It can start from specific URLs, a file of URLs, or the website's sitemap.
+    *   It crawls pages using `requests`.
+    *   `BeautifulSoup` parses HTML, and custom logic in `_extract_text_content` pulls key textual information (product descriptions, features, category product lists).
+    *   Text is cleaned and broken into smaller, manageable chunks by `TextProcessor`.
+    *   Each chunk is converted into a numerical embedding using `models/embedding-001`.
+    *   Embeddings are stored in a FAISS vector index (`faiss_index.bin`).
+    *   The corresponding text chunks and metadata (URL, page title, chunk index, etc.) are saved in `metadata.jsonl`.
+    *   A `url_mapping.json` and `content_cache.json` are also used to manage crawl state and efficiency.
 
-* Python with the Django Framework
-* SQLite (simple, file-based database included with Django, used mainly for logging in this MVP)
-* Google Gemini API (accessed via standard REST API calls)
-* Python requests library
-* Basic HTML, CSS, and JavaScript for the chat interface
-* Python Virtual Environment (venv) to manage dependencies
-* Git and GitHub
+2.  **Chatting with the Assistant (The Web App via `views.py`):**
+    *   You type your question into the web interface.
+    *   JavaScript sends your message (and potentially conversation history and ID) to the Django backend (`/api/chat/`).
+    *   **Inside `process_message` in `chatbot_app/views.py`:**
+        a.  `extract_potential_product_name`: Tries to identify product(s) in your query.
+        b.  `analyze_query_intent`: Determines if your query is about a specific product aspect, a general product overview, a comparison, a category, or a general question.
+        c.  `generate_targeted_queries`: Creates several specific search queries based on this intent.
+        d.  `multi_query_retrieval`: For each targeted query, it generates an embedding and searches the FAISS index. It applies URL filters if a specific product is identified. It gathers a candidate set of text chunks.
+        e.  `select_final_chunks` (which uses `re_rank_chunks`): This crucial step re-ranks the candidate chunks. It uses TF-IDF similarity to your query, calculated information density of chunks, intent-specific keywords, and penalties for very short/uninformative chunks. The top N (e.g., 6) chunks are selected.
+        f.  `format_chunks_for_context`: The selected chunks are formatted with source information and special tags (e.g., `[Direct Info for Product X]`).
+        g.  `generate_llm_response`: A detailed prompt is constructed for the Gemini chat model (`gemini-1.5-flash-latest`). This includes:
+            *   A dynamic system instruction (from `get_system_prompt`) based on the query intent.
+            *   The formatted retrieved context.
+            *   Conversation history.
+            *   Your actual question.
+        h.  Gemini generates an answer based on this comprehensive prompt.
+        i.  `post_process_response`: Minor cleanup of the LLM's text.
+        j.  The interaction is logged to the SQLite database (`ChatLog` model).
+        k.  The bot's response is sent back to the frontend.
+    *   The frontend JavaScript uses `marked.js` to render Markdown in the response (like bullet points or bold text).
 
-## 4. How It Works (The Basic Flow)
+## What a Chat Might Look Like
 
-1. A user types a message into the simple web interface.
-2. The frontend JavaScript sends this message to our Django backend.
-3. The Django view function receives the message. It looks at the user's current session to retrieve the recent chat history (to understand context).
-4. It tries to figure out if the user's message is about one of the known Sensory Souk products (using simple keyword checks or potentially asking the AI).
-5. If it's about a known product:
-   - The view loads the relevant product details from our static data file (.json).
-   - It constructs a detailed prompt for the Gemini API. This prompt includes: instructions for the AI (act as assistant, use only provided data), the product data itself (grounding context), the recent chat history, and the user's actual question.
-   - It calls the Gemini API using the requests library.
-6. If it's not about a known product:
-   - The view prepares a standard "Sorry, I only know about these products..." response.
-7. The view gets the response back from the Gemini API (or uses the standard out-of-scope response).
-8. It updates the chat history stored in the user's session.
-9. It logs the user's message and the bot's response to the SQLite database.
-10. It sends the bot's response back to the frontend JavaScript.
-11. The JavaScript displays the bot's message in the chat window.
+**You:** `Hi SanConnect!`  
+**Bot:** `Hello! I'm the SanConnect Product Assistant. I can help you with information about our Sensory Souk products. What would you like to know?`
 
-## 5. Example Conversation
+**You:** `Describe Space Explorers.`  
+**Bot:**
+The **Space Explorers** body stocking is a sensory tool designed to stretch the imagination. It is an ultimate body stocking made of 4-way stretch spandex that provides proprioceptive input. The snug fabric hugs the body, offering resistance and soothing benefits for a sensory diet, helping kids calm down. It is also lightweight and travels easily.
 
-Here's how an interaction might look:
+It helps children develop spatial and body awareness, muscle strength, and motor planning. It also supports sensory-seeking kids, teens, and adults with ADHD, sensory integration disorder, or autism. It can be used when you need a little downtime, immersing yourself in the cozy, stretchy, and supremely comfortable material. It encourages imaginative play, such as pretending to be animals or objects.
 
-**Bot:** Hi! I'm the Internal Guide AI. I currently have information about the Wooden Busy Board, Time Tracker Visual Timer, and Nee Doh Stress Balls. How can I help?
+The Space Explorers sack is available in the following sizes:
+*   **X-Small (Purple MW6233):** 30"L x 22"W, ages 2-4
+*   **Small (Red MW5639):** 40"L x 26"W, ages 3-5
+*   **Medium (Green MW5640):** 47"L x 27"W, ages 6-8
+*   **Large (Orange MW5641):** 56"L x 28"W, ages 9-12
+*   **X-Large (Blue MW5642):** 60"L x 28"W, ages 12-adult
 
-**User:** Tell me about the busy board
+It weighs approximately 7 oz and is made of 93% polyester, 5% spandex, and 100% polyester hook and loop closures.
+*(Source: Space Explorers – SensorySouk.com - https://www.sensorysouk.com/products/space-explorers)*
 
-**Bot:** The Wooden Busy Board is a 30x23 cm timber board designed for children 3 years and older. It helps enhance fine motor control, problem-solving, and patience using various latches and hatches. It features non-toxic paint but requires adult supervision due to small parts.
+**You:** `What conditions is the Spio Classic TLSO ideal for?`  
+**Bot:** `The Spio Classic TLSO is ideal for those with Hypotonia, Cerebral Palsy, Down Syndrome, Muscular Atrophy, Athetosis, and Sensory Processing Disorder. *(Source: Spio Classic TLSO – SensorySouk.com - https://www.sensorysouk.com/products/spio-compression-clothing)*`
 
-**User:** what age is it recommended for?
+**You:** `Thanks!`  
+**Bot:** `You're welcome! Is there anything else I can help you with regarding Sensory Souk products?`
 
-**Bot:** It's recommended for ages 3 years and up, but please note it has small parts and requires adult supervision.
+## Setting Up Your Own SanConnect Assistant
 
-**User:** Thanks
+Want to get this running locally? Here's the drill:
 
-**Bot:** You're welcome! Can I help with information on the other products?
+1.  **Clone the Repo:**
+    ```bash
+    git clone [URL_OF_YOUR_GITHUB_REPO]
+    cd InternalGuideAI/backend
+    ```
+    *(This assumes your `manage.py` is in the `InternalGuideAI/backend` subdirectory of your Git clone. Adjust if your structure is different.)*
 
-**User:** What's the capital of Qatar?
+2.  **Create & Activate a Python Virtual Environment:**
+    It's best practice to keep project dependencies isolated.
+    ```bash
+    python -m venv venv
+    ```
+    Activate it:
+    *   Windows: `venv\Scripts\activate`
+    *   macOS/Linux: `source venv/bin/activate`
 
-**Bot:** Sorry, I only have information about the Wooden Busy Board, Time Tracker Visual Timer, and Nee Doh Stress Balls right now.
+3.  **Install Dependencies:**
+    All the Python packages needed are listed in `requirements.txt`.
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-## 6. Getting Started (Setup & Running)
+4.  **Set Up Environment Variables:**
+    *   In the `InternalGuideAI/backend` directory (alongside `manage.py` and `settings.py`), create a file named `.env`.
+    *   Add your Google Gemini API key to this file. Your `settings.py` should be configured to load this.
+        ```env
+        GEMINI_API_KEY="YOUR_ACTUAL_API_KEY_HERE"
+        # Ensure your settings.py loads this, e.g., using python-dotenv
+        # Example for settings.py:
+        # from dotenv import load_dotenv
+        # load_dotenv()
+        # GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+        ```
+    *   Ensure your `settings.py` has a `SECRET_KEY`. For development, Django generates one. For production, this should be a strong, unique key kept secret.
 
-*(Detailed setup instructions will be added here, covering: cloning the repository, setting up the Python virtual environment, installing dependencies from requirements text, creating a file to store environment varibales and adding your GEMINI_API_KEY, running Django database migrations, and starting the development server using python runserver.)*
+5.  **Apply Database Migrations:**
+    This sets up the necessary database tables (including for `ChatLog`).
+    ```bash
+    python manage.py migrate
+    ```
+
+6.  **Build/Update the Knowledge Base:**
+    Before the chatbot can answer questions accurately, you need to crawl the website and build the vector index.
+    *   **To process specific URLs (good for initial testing or small updates):**
+        Create a file (e.g., `data/seed_urls.txt`) with one product/category URL per line. Then run:
+        ```bash
+        python manage.py update_vectordb --rebuild --force --urls-file data/seed_urls.txt
+        ```
+        *(`--rebuild` deletes old data, `--force` re-crawls even if cached. Use `--max-pages` to limit crawl depth from each seed URL if they are category pages.)*
+    *   **To process the whole site via sitemap (for a full build):**
+        ```bash
+        python manage.py update_vectordb --rebuild --force --max-pages 500 
+        ```
+        *(This will use the sitemap defined in `update_vectordb.py`. Adjust `--max-pages` as needed. This can take a while!)*
+
+7.  **Run the Django Development Server:**
+    ```bash
+    python manage.py runserver
+    ```
+
+8.  **Chat!**
+    Open your web browser and go to `http://127.0.0.1:8000/`. You should see the SanConnect Product Assistant ready for your questions!
+
+## Future Enhancements & Considerations
+
+*   **Improving Product Name Extraction:** This is key for reliability. Exploring fuzzy matching against a known product list or more advanced NLP techniques could help.
+*   **Refining Re-ranking Logic:** Continuously tuning the weights and heuristics in `re_rank_chunks` based on test cases.
+*   **Handling Ambiguity:** Better strategies for when a user's query is vague or could refer to multiple products/aspects.
+*   **Advanced Comparison:** More robust logic for comparing 2+ products across multiple aspects.
+*   **Category Q&A:** Fully implementing and testing questions about product categories.
+*   **Error Handling & User Feedback:** More graceful error handling and providing users with clearer feedback when information can't be found.
+*   **Scalability:** For very large product catalogs, optimizing the retrieval and re-ranking steps will be important.
+*   **Evaluation Framework:** Implementing a systematic way to test the bot's accuracy and helpfulness on a predefined set of questions.
+
+---
+This project is a learning journey into building effective RAG systems. Contributions and suggestions are welcome!
