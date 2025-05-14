@@ -4,35 +4,35 @@ SanConnect Product Assistant is an internal chat-based tool for querying Sensory
 
 ## Core Features
 
-The assistant's knowledge is built by crawling and parsing the Sensory Souk website. It indexes all product pages so that questions like "Describe [Product X]" can be answered with information pulled directly from the site.
+1. The assistant's knowledge is built by crawling and parsing the Sensory Souk website. It indexes all product pages so that questions like "Describe [Product X]" can be answered with information pulled directly from the site.
 
-User queries are processed through a Retrieval-Augmented Generation pipeline. Google's Gemini LLM interprets the question, while the system retrieves relevant text chunks from the product database to ground the answer.
+2. User queries are processed through a Retrieval-Augmented Generation pipeline. Google's Gemini LLM interprets the question, while the system retrieves relevant text chunks from the product database to ground the answer.
 
-All responses are strictly based on the scraped product data. This design choice prevents the AI from "making up" information – if the answer can't be found in the product content, the assistant will acknowledge its limits.
+3. All responses are strictly based on the scraped product data. This design choice prevents the AI from "making up" information – if the answer can't be found in the product content, the assistant will acknowledge its limits.
 
-The assistant maintains a short conversation history (sent via the frontend) to handle follow-up questions sensibly. This basic chat memory lets it relate answers to the previous user turn.
+4. The assistant maintains a short conversation history (sent via the frontend) to handle follow-up questions sensibly. This basic chat memory lets it relate answers to the previous user turn.
 
-A minimal web frontend allows users to chat with the assistant in any browser. Markdown formatting (via marked.js) is used so answers can include bullets or bold text for clarity.
+5. A minimal web frontend allows users to chat with the assistant in any browser. Markdown formatting (via marked.js) is used so answers can include bullets or bold text for clarity.
 
-Each chat exchange is logged to a SQLite database (the ChatLog model). This logging is mainly for analysis and future improvement of the assistant.
+6. Each chat exchange is logged to a SQLite database (the ChatLog model). This logging is mainly for analysis and future improvement of the assistant.
 
 ## Architecture & Tech Stack
 
-The backend is a Django app that handles both the chat API and the knowledge-base updates.
+- The backend is a Django app that handles both the chat API and the knowledge-base updates.
 
-A lightweight SQLite database stores chat logs and is used during development/testing.
+- A lightweight SQLite database stores chat logs and is used during development/testing.
 
-Google's Gemini models are used for both chat and embeddings. Specifically, a gemini-2.0-flash (or similar) chat model generates answers, and an embedding-001 model encodes text chunks.
+- Google's Gemini models are used for both chat and embeddings. Specifically, a gemini-2.0-flash (or similar) chat model generates answers, and an embedding-001 model encodes text chunks.
 
-The requests library and BeautifulSoup are used to crawl and parse Sensory Souk's product pages. The sitemap is parsed via xml.etree.ElementTree for full-site crawling.
+- The requests library and BeautifulSoup are used to crawl and parse Sensory Souk's product pages. The sitemap is parsed via xml.etree.ElementTree for full-site crawling.
 
-Text from the website is cleaned, chunked, and converted into embeddings. These are stored in a FAISS vector index (faiss_index.bin) for fast similarity search.
+- Text from the website is cleaned, chunked, and converted into embeddings. These are stored in a FAISS vector index (faiss_index.bin) for fast similarity search.
 
-After retrieving candidate text chunks from FAISS, the system uses scikit-learn's TF-IDF vectorizer to measure similarity and re-rank results.
+- After retrieving candidate text chunks from FAISS, the system uses scikit-learn's TF-IDF vectorizer to measure similarity and re-rank results.
 
-A simple HTML/CSS/JavaScript page serves as the chat UI. Responses (in Markdown) are rendered with the [marked.js] library.
+- A simple HTML/CSS/JavaScript page serves as the chat UI. Responses (in Markdown) are rendered with the [marked.js] library.
 
-Standard Python virtual environments (venv) are used to manage packages, and the code is maintained in this GitHub repository.
+- Standard Python virtual environments (venv) are used to manage packages, and the code is maintained in this GitHub repository.
 
 ## How It Works (RAG Flow)
 
