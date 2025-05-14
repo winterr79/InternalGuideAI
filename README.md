@@ -104,7 +104,7 @@ The candidate chunks are re-ranked using a custom process. It scores chunks by T
    ```
    python manage.py runserver
    ```
-   Then open http://127.0.0.1:8000/ in your browser to start chatting with the assistant.
+   Then open, http://127.0.0.1:8000/ to start chatting with the assistant.
 
 ## Limitations & Future Work
 
